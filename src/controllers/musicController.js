@@ -1,4 +1,8 @@
 const musicModel = require("../model/musicModel");
+
+
+
+
 //.................... CREATE NEW MUSIC............................
 const createMusic = async (req, res, next) => {
   try {
@@ -62,7 +66,7 @@ const getSingleMusic = async (req, res, next) => {
     const response = await musicModel.findById(id);
     res.json({
       success: true,
-      message:response? "music fetched successfully!": "music not found",
+      message: response ? "music fetched successfully!" : "music not found",
       response,
     });
   } catch (error) {
@@ -159,7 +163,43 @@ const getNumber = async (req, res, next) => {
       message: error.message,
     });
   }
+};  
+
+//.............................................FILTER MUSIC.............................................................
+const filterMusic = async (req, res, next) => {
+  try {
+    const { album, artist, gener } = req.query;
+
+    let filter = {};
+
+    if (album) {
+      filter.album = { $regex: album, $options: "i" };
+    }
+
+    if (artist) {
+      filter.artist = { $regex: artist, $options: "i" };
+    }
+
+    if (gener) {
+      filter.gener = { $regex: gener, $options: "i" };
+    }
+
+    const response = await musicModel.find(filter);
+
+    res.json({
+      success: true,
+      message: "Music fetched successfully!",
+      count: response.length,
+      response,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
+
 //................... END OF API CONTROLLER............................
 
 module.exports = {
@@ -169,4 +209,5 @@ module.exports = {
   getSingleMusic,
   editMusic,
   getNumber,
+  filterMusic,
 };
