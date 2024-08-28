@@ -18,10 +18,10 @@ try {
        .connect(process.env.DB_URI)
     .then(() => {
       app.listen(port, () =>
-        console.log(`Application running on port  ${port}`)
+        console.log(`Application running on port ${port}`)
       );
     });
 } catch (err) {
-  console.log(err.message);
+  console.log(err.message); 
 }
   

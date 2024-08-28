@@ -7,12 +7,9 @@ const {
   getSingleMusic,
   editMusic,
   getNumber,
-  filterByAlbum,
-  filterByArtist,
-  filterByGener,
   filterMusic,
 } = require("../controllers/musicController");
-
+  
 router.post("/create", createMusic);
 router.get("/get", getAllMusic);
 router.get("/get/:id", getSingleMusic);
